@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WFC 2D Performance Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        background-color: #333;
+        color: white;
+        font-family: sans-serif;
+        height: calc(100vh - 40px);
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      #container {
+        display: grid;
+        grid-template-columns: minmax(350px, 400px) 2fr;
+        gap: 1em;
+        justify-content: center;
+        align-items: flex-start;
+        height: calc(100vh - 100px);
+      }
+      #controls {
+        background-color: rgba(50, 50, 50, 0.9);
+        border: 1px solid #777;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 8px 10px;
+        align-items: center;
+        font-size: 14px;
+        max-width: 400px;
+        min-width: 350px;
+      }
+      #controls label {
+        text-align: right;
+        font-weight: bold;
+      }
+      #controls input,
+      #controls select {
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #666;
+        background-color: #444;
+        color: white;
+        font-size: 13px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #controls input[type="number"] {
+        width: 80px;
+        min-width: 60px;
+      }
+      #controls button {
+        grid-column: 1 / -1;
+        cursor: pointer;
+        background-color: #5577aa;
+        transition: background-color 0.2s;
+        padding: 8px;
+        border-radius: 3px;
+        border: 1px solid #666;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      #controls button:hover {
+        background-color: #6688bb;
+      }
+      #controls button:disabled {
+        background-color: #555;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      #status {
+        grid-column: 1 / -1;
+        text-align: center;
+        font-style: italic;
+        color: #bbb;
+        min-height: 1.5em;
+        margin-top: 10px;
+        border-top: 1px solid #666;
+        padding-top: 10px;
+      }
+      #results {
+        background-color: #2a2a2a;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #555;
+        font-family: monospace;
+        white-space: pre-wrap;
+        max-height: 60vh;
+        overflow-y: auto;
+        line-height: 1.4;
+      }
+      .results-summary {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #555;
+      }
+      .results-summary strong {
+        color: #eee;
+        display: inline-block;
+        min-width: 150px;
+      }
+      .run-log {
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #444;
+      }
+      .run-log:last-child {
+        border-bottom: none;
+      }
+      .success {
+        color: #8f8;
+      }
+      .failure {
+        color: #f88;
+        font-weight: bold;
+      }
+      @media (max-width: 768px) {
+        #container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WFC 2D Performance Test</h1>
+
+    <div id="container">
+      <div id="controls">
+        <label for="gridSize">Grid Size (N x N):</label>
+        <input type="number" id="gridSize" value="20" min="5" max="200" />
+
+        <label for="runs">Number of Runs:</label>
+        <input type="number" id="runs" value="5" min="1" max="100" />
+
+        <label for="tileSet">Tile Set:</label>
+        <select id="tileSet">
+          <option value="road">Road</option>
+          <option value="circuit" selected>Circuit</option>
+          <option value="rail">Rail</option>
+        </select>
+
+        <button id="runPerformanceTestBtn">Run Performance Test</button>
+
+        <div id="status">Ready</div>
+      </div>
+
+      <div id="results"></div>
+    </div>
+
+    <script type="module" src="/src/performance.ts"></script>
+  </body>
+</html>

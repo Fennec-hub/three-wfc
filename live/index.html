@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WFC 2D Example</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="canvas-container">
+      <canvas id="wfc-canvas"></canvas>
+    </div>
+
+    <div id="wfc-controls">
+      <h3>Controls</h3>
+
+      <div class="control-section">
+        <h4>Generation</h4>
+        <div class="control-group input-row">
+          <label for="ctrl-seed">Seed:</label>
+          <input type="text" id="ctrl-seed" value="0" />
+          <button id="ctrl-random-seed" title="Generate Random Seed">🎲</button>
+        </div>
+        <div class="control-group input-row">
+          <label for="ctrl-tileset">Tile Set:</label>
+          <select id="ctrl-tileset">
+            <option value="circuit" selected>Circuit</option>
+            <option value="road">Road</option>
+            <option value="rail">Rail</option>
+            <option value="kenneyMedieval">Kenny Medieval</option>
+          </select>
+        </div>
+
+        <h4>Display</h4>
+        <div class="control-group input-row">
+          <label for="ctrl-width">Width:</label>
+          <input type="number" id="ctrl-width" value="40" min="1" />
+        </div>
+        <div class="control-group input-row">
+          <label for="ctrl-height">Height:</label>
+          <input type="number" id="ctrl-height" value="40" min="1" />
+        </div>
+        <div class="control-group input-row">
+          <label for="ctrl-cellsize">Cell Size:</label>
+          <input type="number" id="ctrl-cellsize" value="20" min="4" />
+        </div>
+        <div class="control-group input-row">
+          <label for="ctrl-delay">Step Delay (ms):</label>
+          <input type="number" id="ctrl-delay" value="0" min="0" />
+        </div>
+        <div class="control-group input-row">
+          <label for="ctrl-grid">Show Grid:</label>
+          <input type="checkbox" id="ctrl-grid" />
+        </div>
+
+        <div class="control-group button-group">
+          <button id="ctrl-reset">Reset</button>
+          <button id="ctrl-step">Step</button>
+          <button id="ctrl-collapse-all">Collapse All</button>
+        </div>
+      </div>
+
+      <div class="control-section">
+        <h4>Performance</h4>
+
+        <div id="wfc-perf-log">
+          <div>Tiles: <span id="log-tiles-count">-</span></div>
+          <div>Cells: <span id="log-cells-count">-</span></div>
+          <div>Last Step: <span id="log-step-time">- ms</span></div>
+          <div>Total Time: <span id="log-all-time">- ms</span></div>
+          <div>Steps: <span id="log-all-count">-</span></div>
+          <div>Avg Step: <span id="log-all-avg">- ms</span></div>
+        </div>
+      </div>
+
+      <div id="ctrl-status">Loading...</div>
+    </div>
+
+    <div id="wfc-tooltip"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

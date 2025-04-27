@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WFC Tile Annotator</title>
+    <link rel="stylesheet" href="/src/tail-editor/editor.css" />
+  </head>
+  <body>
+    <h1>WFC Tile Edge Annotator</h1>
+
+    <div id="editor-controls">
+      <label for="tileset-select">Tile Set:</label>
+      <select id="tileset-select">
+        <option value="road">Road</option>
+        <option value="circuit">Circuit</option>
+        <option value="rail">Rail</option>
+        <option value="kenneyMedieval">Kenny Medieval</option>
+      </select>
+
+      <label for="tile-select">Edit Tile:</label>
+      <select id="tile-select"></select>
+
+      <button id="save-button" title="Save annotations to console (JSON)">
+        Save (Console)
+      </button>
+
+      <fieldset style="border: 1px solid #aaa; padding: 5px">
+        <legend style="font-size: 12px">Auto-Annotate</legend>
+        <label for="ctrl-tolerance" style="font-size: 12px">Tolerance:</label>
+        <input
+          type="range"
+          id="ctrl-tolerance"
+          min="0"
+          max="0.3"
+          step="0.001"
+          value="0.05"
+          style="width: 80px"
+        />
+        <span id="tolerance-value" style="font-size: 12px">0.050</span>
+        <label for="ctrl-sobel" style="font-size: 12px">Sobel:</label>
+        <input
+          type="range"
+          id="ctrl-sobel"
+          min="0"
+          max="100"
+          step="1"
+          value="30"
+          style="width: 80px"
+        />
+        <span id="sobel-value" style="font-size: 12px">30</span>
+        <button id="auto-annotate-btn" style="font-size: 12px">Run Auto</button>
+      </fieldset>
+    </div>
+
+    <div id="editor-visualization">
+      <div id="left-compatible" class="compatibility-display">
+        <h4>Compatible Left (Matching Right Edges)</h4>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 5px;
+        "
+      >
+        <div
+          id="top-compatible"
+          class="compatibility-display"
+          style="max-height: 150px; width: 250px"
+        >
+          <h4>Compatible Top (Matching Bottom Edges)</h4>
+        </div>
+
+        <div id="center-tile-area">
+          <img id="main-tile-img" src="" alt="Selected Tile" />
+          <div id="top-edge-editor" class="edge-editor"></div>
+          <div id="bottom-edge-editor" class="edge-editor"></div>
+          <div id="left-edge-editor" class="edge-editor"></div>
+          <div id="right-edge-editor" class="edge-editor"></div>
+        </div>
+
+        <div
+          id="bottom-compatible"
+          class="compatibility-display"
+          style="max-height: 150px; width: 250px"
+        >
+          <h4>Compatible Bottom (Matching Top Edges)</h4>
+        </div>
+      </div>
+
+      <div id="right-compatible" class="compatibility-display">
+        <h4>Compatible Right (Matching Left Edges)</h4>
+      </div>
+    </div>
+
+    <script type="module" src="/src/tail-editor/editor.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "name": "three-wfc",
+  "version": "0.1.0",
+  "description": "A blazing fast Wave Function Collapse engine for three.js, built for real-time 2D, 2.5D, and 3D procedural world generation at scale.",
+  "type": "module",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "main": "./dist/three-wfc.umd.cjs",
+  "module": "./dist/three-wfc.js",
+  "exports": {
+    ".": {
+      "import": "./dist/three-wfc.js",
+      "require": "./dist/three-wfc.umd.cjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "npm run dev:live",
+    "dev:live": "vite --config vite.config.live.js",
+    "build:live": "vite build --config vite.config.live.js",
+    "preview:live": "vite preview --config vite.config.live.js",
+    "dev:docs": "vitepress dev docs",
+    "build:docs": "vitepress build docs",
+    "preview:docs": "vitepress serve docs",
+    "build:lib": "vite build && tsc --emitDeclarationOnly --outDir dist",
+    "build": "npm run build:lib",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.31",
+    "@types/three": "^0.176.0",
+    "three": "^0.176.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3",
+    "vite-plugin-dts": "^4.5.3",
+    "vitepress": "^1.6.3",
+    "vitest": "^3.1.2",
+    "vue": "^3.5.13"
+  },
+  "peerDependencies": {
+    "three": ">=0.170.0"
+  },
+  "license": "MIT"
+}
