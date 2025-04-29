@@ -2,20 +2,41 @@
   "name": "three-wfc",
   "version": "0.1.0",
   "description": "A blazing fast Wave Function Collapse engine for three.js, built for real-time 2D, 2.5D, and 3D procedural world generation at scale.",
-  "type": "module",
-  "files": [
-    "dist",
-    "lib"
+  "keywords": [
+    "three",
+    "three.js",
+    "wfc",
+    "2D",
+    "2.5D",
+    "3D"
   ],
-  "main": "./dist/three-wfc.umd.cjs",
-  "module": "./dist/three-wfc.js",
+  "homepage": "https://github.com/Fennec-hub/three-wfc#readme",
+  "bugs": {
+    "url": "https://github.com/Fennec-hub/three-wfc/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fennec-hub/three-wfc.git"
+  },
+  "license": "MIT",
+  "author": "Fennec",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/three-wfc.js",
       "require": "./dist/three-wfc.umd.cjs"
     }
   },
+  "main": "./dist/three-wfc.umd.cjs",
   "types": "./dist/index.d.ts",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
   "scripts": {
     "dev": "npm run dev:live",
     "dev:live": "vite --config vite.config.live.js",
@@ -44,5 +65,5 @@
   "peerDependencies": {
     "three": ">=0.170.0"
   },
-  "license": "MIT"
+  "module": "./dist/three-wfc.js"
 }
