@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "Three.js Wave Function Collapse "
-  text: "A ⚡ blazing fast ⚡ Wave Function Collapse engine for three.js, built for real-time 2D, 2.5D, and 3D procedural world generation at scale."
-  tagline: My great project tagline
+  name: "Three.js WFC"
+  text: "Procedural World Generation"
+  tagline: 3D, Isometric 2.5D and 2D
   actions:
     - theme: brand
       text: Markdown Examples
@@ -22,4 +22,3 @@ features:
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
-
