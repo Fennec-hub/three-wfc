@@ -1,0 +1,18 @@
+@import "./form.css";
+
+:root {
+  --bg-color: #252525;
+  --panel-bg: #1e1e1e;
+  --sidebar-bg: #1a1a1a;
+  --accent-color: #f7b731;
+  --text-color: #e0e0e0;
+  --text-muted: #888888;
+  --editor-border-radius: 0.5em;
+  --input-bg: #333333;
+  --placeholder-red: #e74c3c;
+  /* Frosted glass effect variables */
+  --panel-bg-frost: rgba(30, 30, 30, 0.65);
+  --sidebar-bg-frost: rgba(26, 26, 26, 0.75);
+  --thumbnail-slider-bg-frost: rgba(30, 30, 30, 0.8);
+  --backdrop-blur-amount: 8px;
+}

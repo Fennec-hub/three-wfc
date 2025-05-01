@@ -1,0 +1,28 @@
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  background-color: var(--input-bg);
+  border: 1px solid #444;
+  color: var(--text-color);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  width: 100%;
+}
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+.form-group input::placeholder {
+  color: #666;
+}
