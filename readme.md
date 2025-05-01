@@ -25,7 +25,7 @@ Follow these steps to run the live examples locally:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/three-wfc.git # <-- Replace with your actual repo URL
+    git clone https://github.com/Fennec-hub/three-wfc
     cd three-wfc
     ```
 2.  **Install dependencies:**
