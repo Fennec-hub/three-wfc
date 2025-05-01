@@ -45,7 +45,10 @@ export class WFCTileBuffer {
       sumOfWeightsLogWeights += weight * Math.log(weight);
 
       for (let edge = 0; edge < edgesLength; edge++)
-        hashLookup.set(edgeKey(tile, edge), hashArray(tiles[tile].edges[edge]));
+        hashLookup.set(
+          edgeKey(tile, edge),
+          hashArray(tiles[tile]._edges[edge])
+        );
     }
 
     this.initialEntropy =

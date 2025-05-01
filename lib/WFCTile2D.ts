@@ -20,8 +20,6 @@ export class WFCTile2D {
   bottom: (string | number)[];
   /** Edge connection tags for the left side */
   left: (string | number)[];
-  /** Convenience array holding edge tags in [UP, DOWN, LEFT, RIGHT] order */
-  edges: (string | number)[][];
 
   /** Allowed rotations (90, 180, 270 degrees clockwise) */
   rotations: (1 | 2 | 3)[];
@@ -30,9 +28,13 @@ export class WFCTile2D {
   /** Whether reflection along the horizontal axis (Y-reflection) is allowed */
   reflectY: boolean;
 
+  userData: Record<string, any> = {};
+
   /** Optional function for more complex placement rules beyond edge matching */
   rules?: () => boolean;
 
+  /** Convenience array holding edge tags in [UP, DOWN, LEFT, RIGHT] order **/
+  _edges: (string | number)[][];
   /** The rotation applied to this specific tile instance (0 = none) */
   _rotation: 0 | 1 | 2 | 3 = 0;
   /** Whether this specific tile instance is reflected horizontally */
@@ -81,7 +83,7 @@ export class WFCTile2D {
     this.left = left;
     this.right = right;
 
-    this.edges = [this.top, this.bottom, this.left, this.right];
+    this._edges = [this.top, this.bottom, this.left, this.right];
 
     this.rotations = rotations;
     this.reflectX = reflectX;
@@ -94,7 +96,7 @@ export class WFCTile2D {
   }
 
   set weight(value: number) {
-    this._weight = value > 0 ? value : 1;
+    this._weight = value > 0 ? value : 0.0001;
   }
 
   /**
@@ -129,7 +131,7 @@ export class WFCTile2D {
     this.bottom = [...source.bottom];
     this.left = [...source.left];
     this.right = [...source.right];
-    this.edges = [this.top, this.bottom, this.left, this.right];
+    this._edges = [this.top, this.bottom, this.left, this.right];
     this.rotations = [...source.rotations];
 
     return this;
@@ -178,7 +180,7 @@ export class WFCTile2D {
     }
 
     clone.name += `-rot-${rotation}`;
-    clone.edges = [clone.top, clone.bottom, clone.left, clone.right];
+    clone._edges = [clone.top, clone.bottom, clone.left, clone.right];
 
     return clone;
   }
@@ -212,7 +214,7 @@ export class WFCTile2D {
     }
 
     clone.name += `-ref-${axis}`;
-    clone.edges = [clone.top, clone.bottom, clone.left, clone.right];
+    clone._edges = [clone.top, clone.bottom, clone.left, clone.right];
 
     return clone;
   }
