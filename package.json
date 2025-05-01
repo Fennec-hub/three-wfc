@@ -54,10 +54,15 @@
   "devDependencies": {
     "@types/node": "^20.17.31",
     "@types/three": "^0.176.0",
+    "dexie": "^4.0.11",
+    "floating-vue": "^5.2.2",
+    "jszip": "^3.10.1",
+    "oh-vue-icons": "^1.0.0-rc3",
     "three": "^0.176.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
     "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-eslint": "^1.8.1",
     "vitepress": "^1.6.3",
     "vitest": "^3.1.2",
     "vue": "^3.5.13"
