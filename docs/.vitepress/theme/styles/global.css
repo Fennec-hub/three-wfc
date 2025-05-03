@@ -1,3 +1,5 @@
+@import "./vue-floating.css";
+
 /**
  * Customize default theme styling by overriding CSS variables:
  * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
@@ -68,12 +70,8 @@
   --vp-c-yellow-1: #ffc82c; /* Keep bright for visibility */
   --vp-c-yellow-2: #e6b100; /* Slightly darker for hover */
   --vp-c-yellow-3: #ffb300; /* For backgrounds */
-  --vp-c-yellow-soft: rgba(
-    255,
-    200,
-    44,
-    0.16
-  );
+  --vp-c-yellow-muted: #ffc82cbb;
+  --vp-c-yellow-soft: rgba(255, 200, 44, 0.16);
 }
 
 /**
@@ -110,7 +108,6 @@
     #3fa9f5
   );
   --vp-home-hero-image-filter: blur(44px);
-  #002244
 }
 
 @media (min-width: 640px) {

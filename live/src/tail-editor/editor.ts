@@ -432,7 +432,7 @@ function handleSaveChanges() {
   originalTile.left = [...editedTileClone.left];
   originalTile.right = [...editedTileClone.right];
 
-  originalTile.edges = [
+  originalTile._edges = [
     originalTile.top,
     originalTile.bottom,
     originalTile.left,

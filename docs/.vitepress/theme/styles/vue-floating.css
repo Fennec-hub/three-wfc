@@ -1,0 +1,9 @@
+.v-popper--theme-tooltip .v-popper__inner {
+  background: var(--vp-c-yellow-2) !important;
+  color: var(--vp-c-bg-alt) !important;
+  /* font-weight: 600 !important; */
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-outer {
+  border-color: var(--vp-c-yellow-2) !important;
+}

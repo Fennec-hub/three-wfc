@@ -1,3 +1,8 @@
+<script lang="ts" setup>
+import "../../styles/editor/index.css"
+import Panel from './Panel/Index.vue';
+</script>
+
 <template>
   <div :class="$style.editor">
     <div :class="$style.bg"></div>
@@ -7,12 +12,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import "../../styles/editor/index.css"
-import Panel from './Panel/Index.vue';
-
-</script>
 
 <style module>
 .editor {
