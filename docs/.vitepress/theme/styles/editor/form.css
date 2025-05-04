@@ -71,7 +71,7 @@
 .button-group2 {
   font-size: 0.9em;
   display: flex;
-  gap: 0.5em;
+  gap: 1em;
   justify-content: center;
   margin-top: 1em;
 }
@@ -92,7 +92,7 @@
 
   &:hover,
   &:focus {
-    background-color: #b9901a;
+    background-color: var(--accent-muted);
     outline: none;
   }
 
@@ -106,7 +106,7 @@
   }
 
   svg {
-    color: #3a3a3a;
+    color: var(--panel-bg);
     margin-right: 0.25em;
     transition: color 0.2s;
 
@@ -132,9 +132,9 @@
   text-align: center;
 
   &.active {
-    background-color: var(--accent-color);
+    background-color: var(--accent-muted);
     color: var(--panel-bg);
-    border-color: var(--accent-color);
+    border-color: var(--accent-muted);
     font-weight: 500;
 
     &:hover {

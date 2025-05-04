@@ -1,36 +1,37 @@
 import { Object3D } from "three";
 import {
-  PROJECT_MODE_GRID,
-  PROJECT_MODE_TILES,
-  PROJECT_MODE_NONE,
-  PROJECT_TYPE_2D,
-  PROJECT_TYPE_3D,
-  PROJECT_TYPE_ISOMETRIC,
+  EDITOR_MODE_GRID,
+  EDITOR_MODE_TILES,
+  EDITOR_MODE_WORLD,
+  WORLD_TYPE_2D,
+  WORLD_TYPE_3D,
+  WORLD_TYPE_ISOMETRIC,
 } from "./constants";
 
-export type ProjectType =
-  | typeof PROJECT_TYPE_2D
-  | typeof PROJECT_TYPE_ISOMETRIC
-  | typeof PROJECT_TYPE_3D;
+export type EditorMode =
+  | typeof EDITOR_MODE_WORLD
+  | typeof EDITOR_MODE_TILES
+  | typeof EDITOR_MODE_GRID;
 
-export type ProjectMode =
-  | typeof PROJECT_MODE_NONE
-  | typeof PROJECT_MODE_TILES
-  | typeof PROJECT_MODE_GRID;
+export type WorldType =
+  | typeof WORLD_TYPE_2D
+  | typeof WORLD_TYPE_ISOMETRIC
+  | typeof WORLD_TYPE_3D;
 
 export type EditorTileEdges = (string | number)[];
 
 export interface EditorState {
-  projects: number[];
-  project: number | null;
+  world: number | null;
+  mode: EditorMode;
+  expanded: boolean;
 }
 
-export interface ProjectState {
+export interface WorldState {
   id: number;
   name: string;
   thumb?: string;
-  type: ProjectType;
-  mode: ProjectMode;
+  type: WorldType;
+  mode: EditorMode;
   cols: number;
   rows: number;
   zoom: number;
@@ -40,7 +41,7 @@ export interface ProjectState {
 
 export interface Tile2DState {
   id: number;
-  project: number;
+  world: number;
   name: string;
   image: string;
   top: EditorTileEdges;
@@ -55,12 +56,14 @@ export interface Tile3DState extends Tile2DState {
   back: EditorTileEdges;
 }
 
-export interface ProjectData {
+export type TileState = Tile2DState | Tile3DState;
+
+export interface WorldData {
   id: number;
   thumb?: Blob;
-  type: ProjectType;
+  type: WorldType;
   name: string;
-  mode: ProjectMode;
+  mode: EditorMode;
   cols: number;
   rows: number;
   tiles: number[];
@@ -71,7 +74,7 @@ export interface ProjectData {
 
 export interface Tile2DData {
   id: number;
-  project: number;
+  world: number;
   name: string;
   image: Blob;
   top: EditorTileEdges;

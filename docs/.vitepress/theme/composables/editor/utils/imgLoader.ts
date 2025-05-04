@@ -1,10 +1,12 @@
-export const imgLoader = (src: string): Promise<HTMLImageElement> =>
+export const imgLoader = (source: string): Promise<HTMLImageElement> =>
   new Promise((resolve: (value: HTMLImageElement) => void, reject) => {
     const img = new Image();
-    img.src = src;
     img.onload = () => resolve(img);
     img.onerror = (error) => reject(error);
+    img.src = source;
   });
 
-export const imgLoaderBatch = (srcs: string[]): Promise<HTMLImageElement[]> =>
-  Promise.all(srcs.map((src) => imgLoader(src)));
+export const imgLoaderBatch = (
+  sources: string[]
+): Promise<HTMLImageElement[]> =>
+  Promise.all(sources.map((src) => imgLoader(src)));

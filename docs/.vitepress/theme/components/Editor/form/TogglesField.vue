@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import FormGroup from './FormGroup.vue';
 
+export type ToggleFieldOption = { label: string, icon?: string, rotation?: number, tooltip?: string };
 const model = defineModel<boolean[]>({ required: true, default: [] });
 
 const { label, options } = defineProps<{
   label: string,
-  options: [label: string, icon?: string, rotation?: number][],
+  options: ToggleFieldOption[],
   column?: boolean
 }>();
 </script>
@@ -13,10 +14,12 @@ const { label, options } = defineProps<{
 <template>
   <FormGroup :label="label" :column="column">
     <template #input>
-      <button v-for="([name, icon], i) in options" class="button-action" :key="name" :class="{ active: !!model[i] }"
+      <button v-for="({ label, icon, tooltip }, i) in options" class="button-action" :key="label"
+        :class="{ active: !!model[i] }"
+        v-tooltip="{ content: tooltip, distance: 15, enabled: !!tooltip, delay: { show: 500, hide: 100 } }"
         @click="model[i] = !model[i]">
         <v-icon v-if="icon" :name="icon" />
-        {{ name }}
+        {{ label }}
       </button>
     </template>
 

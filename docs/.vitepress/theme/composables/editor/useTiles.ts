@@ -1,6 +1,6 @@
 import { reactive, readonly } from "vue";
 import {
-  ProjectData,
+  WorldData,
   Tile2DState,
   Tile3DState,
   Tile2DData,
@@ -11,9 +11,9 @@ import { useDB } from "./useDB";
 const db = useDB();
 const state = reactive<Record<number, Tile2DState | Tile3DState>>({});
 
-const load = async (project: ProjectData) => {
+const load = async (project: WorldData) => {
   unList();
-  db.getProjectTiles(project).then((tiles) => tiles.forEach(parse));
+  db.getWorldTiles(project).then((tiles) => tiles.forEach(parse));
 };
 
 const parse = (tile: Tile2DData | TileData3D) => {

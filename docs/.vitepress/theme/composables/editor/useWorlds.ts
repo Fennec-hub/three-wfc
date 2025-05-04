@@ -1,5 +1,5 @@
 import { reactive, readonly } from "vue";
-import { ProjectData, ProjectState } from "../types";
+import { WorldData, WorldState } from "../types";
 import { useDB } from "./useDB";
 import { useTiles } from "./useTiles";
 import { generateTilesThumb } from "./utils/tilesToThumb";
@@ -7,30 +7,30 @@ import { generateTilesThumb } from "./utils/tilesToThumb";
 const db = useDB();
 const tiles = useTiles();
 
-const state = reactive<Record<number, ProjectState>>({});
+const state = reactive<Record<number, WorldState>>({});
 
 const initialize = async () =>
-  db.getProjects().then((data) => data.forEach(parse));
+  db.getWorlds().then((data) => data.forEach(parse));
 
-const parse = (project: ProjectData) => {
+const parse = (project: WorldData) => {
   const thumb = project.thumb && URL.createObjectURL(project.thumb);
   const entry = { [project.id]: { ...project, thumb } };
 
   Object.assign(state, entry);
 };
 
-const create = (project: ProjectData) => {
+const create = (project: WorldData) => {
   parse(project);
-  db.createProject(project);
+  db.createWorld(project);
 };
 
 const list = () => Object.keys(state);
 
 const read = (id: number) => readonly(state[id]);
 
-const update = (id: number, changes: Partial<ProjectData>) => {
+const update = (id: number, changes: Partial<WorldData>) => {
   Object.assign(state[id], changes);
-  db.updateProject(id, changes);
+  db.updateWorld(id, changes);
 };
 
 const thumb = async (id: number) => {
@@ -47,10 +47,10 @@ const thumb = async (id: number) => {
 const remove = (id: number) => {
   if (state[id].thumb) URL.revokeObjectURL(state[id].thumb);
   delete state[id];
-  db.deleteProject(id);
+  db.deleteWorld(id);
 };
 
-export const useProjects = () => ({
+export const useWorlds = () => ({
   initialize,
   create,
   list,
