@@ -20,3 +20,6 @@ export const EDITOR_SECTIONS: Record<
   [EDITOR_MODE_TILES]: { name: "Tiles", icon: "hi-solid-puzzle" },
   [EDITOR_MODE_GRID]: { name: "Grid", icon: "md-gridon-outlined" },
 };
+
+export const EDITOR_2D_EDGES = ["top", "right", "bottom", "left"] as const;
+export const EDITOR_3D_EDGES = [...EDITOR_2D_EDGES, "front", "back"] as const;

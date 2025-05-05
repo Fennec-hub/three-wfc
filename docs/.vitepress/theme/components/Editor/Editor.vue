@@ -5,7 +5,6 @@ import "../../styles/editor/index.css"
 import Panel from './Panel/Panel.vue';
 import Tiles from './Tiles/Tiles.vue';
 
-
 const { state } = useEditor();
 
 </script>
@@ -67,8 +66,8 @@ canvas {
 
     &,
     * {
-      scrollbar-width: thin;
-      scrollbar-color: #397524 #DFE9EB;
+      scrollbar-width: medium;
+      scrollbar-color: var(--accent-color) transparent;
     }
   }
 
@@ -103,12 +102,12 @@ canvas {
 
   &::-webkit-scrollbar-thumb:hover,
   *::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent-color);
+    background-color: var(--text-color);
   }
 
   &::-webkit-scrollbar-thumb:active,
   *::-webkit-scrollbar-thumb:active {
-    background-color: var(--accent-color);
+    background-color: var(--text-color);
   }
 }
 </style>

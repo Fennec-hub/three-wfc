@@ -76,6 +76,7 @@ window.onresize = alignToTarget;
     width: 60px;
     min-height: 300px;
     padding: 1em 0.5em;
+    transition: transform 0.3s ease-out, width 0.3s ease-out;
   }
 }
 </style>

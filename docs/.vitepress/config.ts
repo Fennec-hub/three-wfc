@@ -1,4 +1,6 @@
 import { defineConfig } from "vitepress";
+import { optimizeCssModules } from "vite-plugin-optimize-css-modules";
+import eslintPlugin from "vite-plugin-eslint";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -30,6 +32,20 @@ export default defineConfig({
     socialLinks: [
       { icon: "github", link: "https://github.com/vuejs/vitepress" },
       { icon: "x", link: "https://x.com/_Fennec_XYZ" },
+    ],
+  },
+  vite: {
+    plugins: [
+      eslintPlugin({
+        include: ["./theme/**/*.{js,ts,vue}"],
+        cache: false,
+        // lintOnStart: true,
+        emitWarning: true,
+        emitError: true,
+        // failOnError: false,
+      }),
+      // @ts-ignore
+      optimizeCssModules(),
     ],
   },
 });

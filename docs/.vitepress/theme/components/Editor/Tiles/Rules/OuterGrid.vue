@@ -1,64 +1,44 @@
 <script lang="ts" setup>
-
+import InnerGrid from './InnerGrid/InnerGrid.vue';
+import Edge from './EdgeTiles.vue';
+import { EDITOR_2D_EDGES } from '../../../../composables/constants';
 </script>
 
 <template>
-  <div :class="$style['tiles-grid']">
-    <div :class="$style.center">
-      <h1>center</h1>
-    </div>
-    <div :class="$style.top">
-      <h1>top</h1>
-    </div>
-    <div :class="$style.right">
-      <h1>right</h1>
-    </div>
-    <div :class="$style.bottom">
-      <h1>bottom</h1>
-    </div>
-    <div :class="$style.left">
-      <h1>left</h1>
-    </div>
+  <div :class="$style['outer-grid']">
+    <InnerGrid />
+    <Edge v-for="(edge, i) in EDITOR_2D_EDGES" :class="[$style[edge]]" :dir="edge" :col="!!(i % 2)" :key="i" />
   </div>
 </template>
 
 <style module>
-.tiles-grid {
+.outer-grid {
+  position: relative;
   flex-grow: 1;
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
-  gap: 0.5em;
   align-items: center;
   justify-items: center;
-  position: relative;
   min-width: 0;
   min-height: 0;
+  margin: auto;
+  padding: 0.5em;
 
-  >* {
-    background-color: aquamarine;
-  }
-
-  &:after {
+  &:before {
     content: "";
     position: absolute;
-    top: calc(-1em - 4px);
+    top: -4px;
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: #777;
+    background-color: #999;
   }
-}
-
-.center {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
 }
 
 .top {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
-  height: 15%;
 }
 
 .right {

@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import Grid from './Grid/Grid.vue';
-import List from './List/List.vue';
-
-
+import RulesGrid from './Rules/OuterGrid.vue';
+import List from './List/Slider.vue';
 </script>
 
 <template>
   <div :class="$style.tiles">
     <List />
-    <Grid />
+    <RulesGrid />
   </div>
 </template>
 
@@ -18,7 +16,6 @@ import List from './List/List.vue';
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 1em;
   padding: 0 calc(325px + 2em) 0 0;
   background-color: var(--panel-bg-frost);
   backdrop-filter: blur(var(--backdrop-blur-amount));
@@ -39,7 +36,7 @@ import List from './List/List.vue';
     right: calc(325px + 2em);
     height: 100%;
     width: 1px;
-    background-color: #777;
+    background-color: #999;
   }
 }
 </style>

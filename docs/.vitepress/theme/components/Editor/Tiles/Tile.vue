@@ -12,13 +12,11 @@ defineProps<{ id: number }>();
 .tile {
   overflow: hidden;
   flex: 0 0 auto;
-  max-height: 100%;
   border-radius: var(--editor-border-radius);
 
   img {
-    max-height: 100%;
-    height: auto;
     width: auto;
+    height: auto;
   }
 }
 </style>
