@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import Tile from "../Tile.vue";
+import Upload from "./Upload.vue";
 </script>
 
 <template>
   <div :class="$style.slider">
     <div :class="$style.content">
-      <Tile v-for="(n, i) in 6" :id="n" :key="i" />
+      <Tile v-for="(n, i) in 10" :id="n" :key="i" />
+      <Upload />
     </div>
   </div>
 </template>
@@ -21,12 +23,22 @@ import Tile from "../Tile.vue";
   width: 100%;
   padding: 1em;
   flex-shrink: 0;
+  border-bottom: 1px solid #999;
 }
 
 .content {
-  display: inline-flex;
+  position: relative;
+  display: flex;
+  align-items: center;
   gap: 1em;
   flex-wrap: nowrap;
-  margin: auto;
+
+  &:after {
+    content: "";
+    flex-shrink: 0;
+    height: 1em;
+    width: 1px;
+  }
+
 }
 </style>

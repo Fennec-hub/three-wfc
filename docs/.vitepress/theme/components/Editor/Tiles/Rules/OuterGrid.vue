@@ -24,16 +24,6 @@ import { EDITOR_2D_EDGES } from '../../../../composables/constants';
   min-height: 0;
   margin: auto;
   padding: 0.5em;
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #999;
-  }
 }
 
 .top {

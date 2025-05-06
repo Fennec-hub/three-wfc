@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import { EDITOR_2D_EDGES } from "../../../../composables/constants";
 import Tile from "../Tile.vue"
 
-defineProps<{ dir: 'top' | 'right' | 'bottom' | 'left', col: boolean }>();
+defineProps<{ dir: typeof EDITOR_2D_EDGES[number], col: boolean }>();
 </script>
 
 <template>
@@ -77,7 +78,7 @@ defineProps<{ dir: 'top' | 'right' | 'bottom' | 'left', col: boolean }>();
 
   &.bottom {
     &:before {
-      top: calc(-100% + 1.25em);
+      top: calc(-100% + 1.3em);
     }
 
     &:after {
