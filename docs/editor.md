@@ -6,7 +6,7 @@ title: Editor
 ---
 
 <script setup>
-import WFCEditor from './.vitepress/theme/components/Editor/Editor.vue'
+import WFCEditor from './.vitepress/theme/components/Editor/Index.vue'
 </script>
 
 <WFCEditor />

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import FormGroup from './FormGroup.vue';
 
+defineEmits(["change"]);
 const model = defineModel<number | string>();
 
 const { label, type = 'number', placeholder } = defineProps<{
-  label: string,
+  label?: string,
   type?: string,
   placeholder?: string
 }>();
@@ -13,7 +14,7 @@ const { label, type = 'number', placeholder } = defineProps<{
 <template>
   <FormGroup :label="label">
     <template #input="{ id }">
-      <input :id="id" :type="type" v-model="model" :placeholder="placeholder" />
+      <input :id="id" :type="type" v-model="model" :placeholder="placeholder" @change="$emit('change', model)" />
     </template>
 
     <template v-for="(_, name) in $slots" #[name]="slotProps">

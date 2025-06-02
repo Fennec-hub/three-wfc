@@ -1,20 +1,21 @@
 <script lang="ts" setup>
-import { EDITOR_MODE_TILES } from "../../composables/constants";
-import { useEditor } from "../../composables/editor/useEditor";
 import "../../styles/editor/index.css"
-import Panel from './Panel/Panel.vue';
+import { EDITOR_MODE_GRID, EDITOR_MODE_TILES } from "../../composables/constants";
+import { useEditor } from "../../composables/editor/useEditor";
+
+import Panel from './Panel/Index.vue';
 import Tiles from './Tiles/Tiles.vue';
 
-const { state } = useEditor();
+const { state, tilesCount } = useEditor();
 
 </script>
 
 <template>
-  <div :class="[$style.editor, { [$style.blur]: state.mode === EDITOR_MODE_TILES }]">
+  <div :class="[$style.editor, { [$style.blur]: state.mode !== EDITOR_MODE_GRID }]">
     <div :class="$style.bg" />
     <Panel />
     <Transition>
-      <Tiles v-if="state.mode === EDITOR_MODE_TILES" />
+      <Tiles v-if="tilesCount && state.mode === EDITOR_MODE_TILES" />
     </Transition>
   </div>
 </template>
@@ -50,14 +51,6 @@ const { state } = useEditor();
   background-position: center;
   filter: blur(0) brightness(1);
   transition: filter 0.3s ease-out;
-}
-
-canvas {
-  position: fixed;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
 }
 
 /* Scrollbar styles */

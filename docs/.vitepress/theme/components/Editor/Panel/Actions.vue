@@ -25,7 +25,7 @@
   display: flex;
   justify-content: space-around;
   background-color: var(--accent-color);
-  margin: auto 0 -1em;
+  margin: auto -1px -1em;
   border-radius: 0 0 var(--editor-border-radius) var(--editor-border-radius);
 
   button {

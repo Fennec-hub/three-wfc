@@ -1,26 +1,25 @@
 import Dexie, { type EntityTable } from "dexie";
-import { WorldData, WorldState, Tile2DData, TileData3D } from "../types";
+import { WorldData, TileData } from "../types";
 import { EDITOR_DB_NAME, EDITOR_DB_VERSION } from "../constants";
-import { blobLoader } from "./utils/blobLoader";
 import { Object3D } from "three";
 
 class EditorDB {
   private readonly db: Dexie & {
     world: EntityTable<WorldData, "id">;
-    tile: EntityTable<Tile2DData | TileData3D, "id">;
+    tile: EntityTable<TileData, "id">;
   };
   private readonly world: EntityTable<WorldData, "id">;
-  private readonly tile: EntityTable<Tile2DData | TileData3D, "id">;
+  private readonly tile: EntityTable<TileData, "id">;
 
   constructor() {
     this.db = new Dexie(EDITOR_DB_NAME) as Dexie & {
       world: EntityTable<WorldData, "id">;
-      tile: EntityTable<Tile2DData | TileData3D, "id">;
+      tile: EntityTable<TileData, "id">;
     };
 
     this.db.version(EDITOR_DB_VERSION).stores({
       world: "++id, type",
-      tile: "++id",
+      tile: "++id, world",
     });
 
     this.world = this.db.world;
@@ -31,7 +30,7 @@ class EditorDB {
     return this.world.add(world).catch(() => null);
   }
 
-  async createTile(tile: Omit<Tile2DData | TileData3D, "id">) {
+  async createTile(tile: Omit<TileData, "id">) {
     return this.tile.add(tile).catch(() => null);
   }
 
@@ -43,17 +42,15 @@ class EditorDB {
     return this.world.toArray();
   }
 
-  async getWorldTiles(world: WorldData) {
+  async getWorldTiles(id: number) {
     return this.tile
-      .where("id")
-      .anyOf(world.tiles)
+      .where("world")
+      .equals(id)
       .toArray()
-      .catch(() => []);
+      .catch(() => null);
   }
 
-  async getTile<T extends Tile2DData | TileData3D>(
-    id: number
-  ): Promise<T | undefined> {
+  async getTile<T extends TileData>(id: number): Promise<T | undefined> {
     return this.tile.get(id).catch(() => undefined) as Promise<T | undefined>;
   }
 
@@ -68,13 +65,13 @@ class EditorDB {
       .catch(() => false);
   }
 
-  async updateTile(id: number, changes: Partial<Omit<Tile2DData, "id">>) {
+  async updateTile(id: number, changes: Partial<Omit<TileData, "id">>) {
     return this.tile.update(id, changes).catch(() => null);
   }
 
-  async tileImage(id: number, image: string) {
-    return blobLoader(image)
-      .then((blob) => this.tile.update(id, { image: blob }))
+  async tileImage(id: number, image: Blob) {
+    return this.tile
+      .update(id, { image })
       .then(() => true)
       .catch(() => false);
   }
@@ -86,27 +83,17 @@ class EditorDB {
 
   async deleteWorld(id: number) {
     return this.world
-      .get(id)
-      .then(
-        (world) =>
-          !!(world && this.tile.where("id").anyOf(world.tiles).delete())
-      )
+      .delete(id)
+      .then(async () => await this.tile.where({ world: id }).delete())
+      .then(() => true)
       .catch(() => false);
   }
 
-  async deleteTile(worldID: number, tileID: number) {
-    try {
-      const world = await this.getWorld(worldID);
-      if (world)
-        this.updateWorld(worldID, {
-          tiles: world.tiles.filter((tile) => tile !== tileID),
-        });
-
-      await this.tile.delete(tileID);
-      return true;
-    } catch (error) {
-      return false;
-    }
+  async deleteTile(tileID: number) {
+    return this.tile
+      .delete(tileID)
+      .then(() => true)
+      .catch(() => false);
   }
 
   async clear() {

@@ -1,50 +1,51 @@
 <script lang="ts" setup>
 import "vue3-colorpicker/style.css";
 import { ColorPicker } from "vue3-colorpicker";
-import { EDITOR_3D_EDGES } from "../../../../../composables/constants";
 import { ref } from "vue";
 
-const color = defineModel<string>();
-const { add } = defineProps<{ add?: boolean, dir: typeof EDITOR_3D_EDGES[number] }>();
+defineEmits(["add", "remove", "update"]);
+
+const props = defineProps<{ color?: string, add?: boolean }>();
 
 const alert = ref<boolean>(false);
-
-const action = () => {
-
-}
-
-const removeAlert = (active: boolean) => alert.value = add ? false : active;
+const color = ref<string>(props.color || "#ffffff");
 </script>
 
 <template>
   <div :class="[$style['color-picker'], { [$style.add]: add, [$style.alert]: alert }]">
-    <b v-if="!add">
-      <ColorPicker v-model:color="color" format="hex" shape="square" use-type="pure" disable-alpha theme="black"
-        lang="En" blur-close />
-    </b>
-    <i @click="action" @pointerenter="removeAlert(true)" @pointerleave="removeAlert(false)"
-      v-tooltip="{ content: 'Add Edge Color', disabled: !add, distance: 15, delay: { show: 500, hide: 100 } }">
+    <i v-if="add" @click="$emit('add')"
+      v-tooltip="{ content: 'Add Edge Color', distance: 15, delay: { show: 500, hide: 100 } }">
       <v-icon name="fa-plus" />
     </i>
+    <template v-else>
+      <b>
+        <ColorPicker v-model:pureColor="color" format="hex" shape="square" use-type="pure" disable-alpha theme="black"
+          lang="En" blur-close @update:pureColor="$emit('update', color)" />
+      </b>
+      <i @click="$emit('remove')" @pointerenter="alert = true" @pointerleave="alert = false">
+        <v-icon name="fa-plus" />
+      </i>
+    </template>
   </div>
 </template>
 
 <style module>
 .color-picker {
   --neutral: #000;
-  --alert: #d72638;
 
   position: relative;
   z-index: 1;
   width: 1.5em;
   height: 1.5em;
+  min-width: 1.5em;
+  min-height: 1.5em;
   border: 1px solid var(--neutral);
   border-radius: .3em;
   cursor: pointer;
   transition: transform 0.15s ease;
 
   &:hover {
-    transform: scale(1.75);
+    transform: scale(1.5);
 
     i {
       display: flex;
@@ -52,7 +53,7 @@ const removeAlert = (active: boolean) => alert.value = add ? false : active;
   }
 
   &.alert {
-    border-color: var(--alert);
+    border-color: var(--alert-color);
   }
 
   b {
@@ -77,7 +78,7 @@ const removeAlert = (active: boolean) => alert.value = add ? false : active;
     border-radius: 100%;
 
     &:hover {
-      background-color: var(--alert);
+      background-color: var(--alert-color);
     }
   }
 

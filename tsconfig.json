@@ -14,7 +14,7 @@
     // "outDir": "dist",
     // "rootDir": "lib"
   },
-  "include": ["lib/**/*.ts", "live/**/*.ts", "docs/**/*.ts"],
+  "include": ["lib/**/*.ts", "live/**/*.ts", "docs/**/*.ts", "docs/**/*.vue"],
   "exclude": [
     "node_modules",
     "dist",

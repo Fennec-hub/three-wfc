@@ -7,7 +7,7 @@ import {
   MdArrowforwardiosRound,
   FaSeedling,
   MdRotaterightRound,
-  FaArrowsAltH,
+  MdFlipRound,
   FaFastForward,
   FaStepForward,
   FaSyncAlt,
@@ -16,9 +16,16 @@ import {
   FaPlus,
   FaUpload,
   FaDownload,
+  HiSolidCube,
+  LaCubesSolid,
+  BiSquare,
+  FaSpinner, 
+  IoWarning,
+  FaTrashAlt,
+  FaRegularEdit
 } from "oh-vue-icons/icons";
 
-//import { threeIcon } from "./three.icon";
+import { threeWFCIcon } from "./three-wfc.icon";
 
 addIcons(
   HiSolidPuzzle,
@@ -27,7 +34,7 @@ addIcons(
   MdArrowforwardiosRound,
   FaSeedling,
   MdRotaterightRound,
-  FaArrowsAltH,
+  MdFlipRound,
   FaFastForward,
   FaStepForward,
   FaSyncAlt,
@@ -35,7 +42,15 @@ addIcons(
   GiPauseButton,
   FaPlus,
   FaUpload,
-  FaDownload
+  FaDownload,
+  HiSolidCube,
+  LaCubesSolid,
+  BiSquare,
+  FaSpinner,
+  IoWarning,
+  FaTrashAlt,
+  FaRegularEdit,
+  threeWFCIcon
 );
 
 export { OhVueIcon };

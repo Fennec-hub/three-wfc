@@ -7,7 +7,7 @@ import { EDITOR_2D_EDGES } from '../../../../composables/constants';
 <template>
   <div :class="$style['outer-grid']">
     <InnerGrid />
-    <Edge v-for="(edge, i) in EDITOR_2D_EDGES" :class="[$style[edge]]" :dir="edge" :col="!!(i % 2)" :key="i" />
+    <Edge v-for="(edge, i) in EDITOR_2D_EDGES" :class="[$style[edge]]" :edge="edge" :col="i > 1" :key="i" />
   </div>
 </template>
 
@@ -31,11 +31,6 @@ import { EDITOR_2D_EDGES } from '../../../../composables/constants';
   grid-row: 1 / 2;
 }
 
-.right {
-  grid-column: 3 / 4;
-  grid-row: 2 / 3;
-}
-
 .bottom {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
@@ -43,6 +38,11 @@ import { EDITOR_2D_EDGES } from '../../../../composables/constants';
 
 .left {
   grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.right {
+  grid-column: 3 / 4;
   grid-row: 2 / 3;
 }
 </style>

@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import Grid from "./Gird.vue";
-import Tiles from "./Tiles.vue";
-import World from "./World.vue";
+import Tiles from "./Tiles/Index.vue";
+import Worlds from "./World/List.vue";
 import Tabs from "./Tabs.vue";
 import Actions from "./Actions.vue";
 import { useEditor } from "../../../composables/editor/useEditor";
+import { EDITOR_MODE_GRID } from "../../../composables/constants";
 
-const { state, expand } = useEditor();
-const components = [World, Tiles, Grid];
+const { state, tilesCount, expand } = useEditor();
+const components = [Worlds, Tiles, Grid];
 </script>
 
 <template>
@@ -18,9 +19,9 @@ const components = [World, Tiles, Grid];
       <Component :is="components[state.mode]" :class="$style.content" />
     </KeepAlive>
 
-    <Actions />
+    <Actions v-if="tilesCount && state.mode === EDITOR_MODE_GRID" />
 
-    <i :class="$style['collapse-button']" @click="expand(false)">
+    <i v-if="tilesCount" :class="$style['collapse-button']" @click="expand(false)">
       <v-icon name="md-arrowforwardios-round" :scale="1" />
     </i>
   </main>
@@ -28,6 +29,7 @@ const components = [World, Tiles, Grid];
 
 <style module>
 .wrapper {
+  overflow: hidden;
   flex: 1;
   display: flex;
   flex-direction: column;

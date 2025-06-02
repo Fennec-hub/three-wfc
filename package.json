@@ -54,11 +54,13 @@
   "devDependencies": {
     "@types/node": "^20.17.31",
     "@types/three": "^0.176.0",
+    "@vueuse/components": "^13.1.0",
     "@vueuse/core": "^13.1.0",
     "dexie": "^4.0.11",
     "floating-vue": "^5.2.2",
     "jszip": "^3.10.1",
     "oh-vue-icons": "^1.0.0-rc3",
+    "smartcrop": "^2.0.5",
     "three": "^0.176.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
@@ -68,6 +70,8 @@
     "vitepress": "^1.6.3",
     "vitest": "^3.1.2",
     "vue": "^3.5.13",
+    "vue-advanced-cropper": "^2.8.9",
+    "vue-toastification": "^2.0.0-rc.5",
     "vue3-colorpicker": "^2.3.0"
   },
   "peerDependencies": {

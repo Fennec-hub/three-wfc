@@ -1,14 +1,17 @@
 <script lang="ts" setup>
-import { EDITOR_2D_EDGES } from "../../../../composables/constants";
+import { useEditor } from "../../../../composables/editor/useEditor";
+import { TileEdge } from "../../../../composables/types";
 import Tile from "../Tile.vue"
 
-defineProps<{ dir: typeof EDITOR_2D_EDGES[number], col: boolean }>();
+defineProps<{ edge: TileEdge, col: boolean }>();
+
+const { state } = useEditor();
 </script>
 
 <template>
-  <div :class="[$style['edge-tiles'], $style[dir], { [$style.col]: col }]"
-    :style="{ ['--compatible-edge']: `'Compatible ${dir} edges'` }">
-    <Tile v-for="(n, i) in 3" :id="n" :key="i" />
+  <div :class="[$style['edge-tiles'], $style[edge], { [$style.col]: col }]"
+    :style="{ ['--compatible-edge']: `'Compatible ${edge} edges'` }">
+    <Tile v-for="tileID in state.compatible[edge]" :id="tileID" :key="tileID" :removable="false" />
   </div>
 </template>
 
@@ -20,6 +23,8 @@ defineProps<{ dir: typeof EDITOR_2D_EDGES[number], col: boolean }>();
   align-items: center;
   gap: 1em;
   margin: 0.5em 1em;
+  min-height: 50px;
+  min-width: 250px;
 
   &:before,
   &:after {
@@ -49,6 +54,8 @@ defineProps<{ dir: typeof EDITOR_2D_EDGES[number], col: boolean }>();
 
   &.col {
     flex-direction: column;
+    min-height: 250px;
+    min-width: 50px;
 
     &:before {
       top: 10%;
@@ -78,11 +85,11 @@ defineProps<{ dir: typeof EDITOR_2D_EDGES[number], col: boolean }>();
 
   &.bottom {
     &:before {
-      top: calc(-100% + 1.3em);
+      top: calc(-100% + 1.75em);
     }
 
     &:after {
-      top: calc(-100% + 1.5em);
+      top: calc(-100% + 2em);
     }
   }
 

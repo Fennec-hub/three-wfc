@@ -1,14 +1,22 @@
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { EDITOR_SECTIONS } from '../../../composables/constants';
 import { useEditor } from '../../../composables/editor/useEditor';
+import { EditorMode } from '../../../composables/types';
 
-const { state, setMode } = useEditor();
+const { state, worldsCount, tilesCount, setMode } = useEditor();
+
+const tabs = computed(() => {
+  const noWorlds = !worldsCount.value || !state.selectedWorld;
+  const noTiles = !tilesCount.value;
+  return Object.values(EDITOR_SECTIONS).splice(0, noWorlds ? 1 : noTiles ? 2 : 3);
+});
 </script>
 
 <template>
-  <ul :class="$style.tabs">
-    <li v-for="({ name, icon }, index) in EDITOR_SECTIONS"
-      :class="[$style.tab, { [$style.active]: state.mode === index }]" @click="setMode(index)">
+  <ul v-if="tabs.length > 1" :class="$style.tabs">
+    <li v-for="({ name, icon }, index) in tabs" :class="[$style.tab, { [$style.active]: state.mode === index }]"
+      @click="setMode(index as EditorMode)">
       <v-icon :name="icon" />
       {{ name }}
     </li>
@@ -29,7 +37,7 @@ const { state, setMode } = useEditor();
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 33%;
+    width: calc(100% / v-bind('tabs.length'));
     height: 3px;
     background-color: var(--accent-color);
     border-radius: 3px;

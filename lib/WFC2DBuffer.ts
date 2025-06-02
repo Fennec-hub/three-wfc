@@ -180,16 +180,14 @@ export class WFC2DBuffer {
   private _propagate(cellIdx: number): boolean {
     const stack = this.stackBuffer.reset();
     const options = this.options;
-    //const tiles = this.tiles;
     const cols = this.cols;
     const rows = this.rows;
     const collapsed = this.collapsed;
-    //const cellPosition = {};
 
-    let stackCellIdx: number | undefined = cellIdx;
-    while (stackCellIdx !== undefined) {
-      const cellX = stackCellIdx % cols;
-      const cellY = Math.floor(stackCellIdx / cols);
+    let currentCellIdx: number | undefined = cellIdx;
+    while (currentCellIdx !== undefined) {
+      const cellX = currentCellIdx % cols;
+      const cellY = Math.floor(currentCellIdx / cols);
 
       for (let edgeIdx = 0; edgeIdx < TILE_EDGES_COUNT; edgeIdx++) {
         let neighborX = cellX;
@@ -213,33 +211,34 @@ export class WFC2DBuffer {
             neighborX++;
             break;
         }
-        const neighborIdx = neighborY * cols + neighborX;
+        const neighborCellIdx = neighborY * cols + neighborX;
 
-        if (collapsed[neighborIdx] !== -1) continue;
+        if (collapsed[neighborCellIdx] !== -1) continue;
 
-        // The opposite edge for the neighbor
-        //const neighborEdge = edge ^ 1; // Bitwise XOR to get opposite edge
-
-        const changed = options.propagate(stackCellIdx, neighborIdx, edgeIdx);
+        const changed = options.propagate(
+          currentCellIdx,
+          neighborCellIdx,
+          edgeIdx
+        );
 
         if (changed) {
-          this._computeEntropy(neighborIdx);
-          stack.push(neighborIdx);
+          this._computeEntropy(neighborCellIdx);
+          stack.push(neighborCellIdx);
           continue;
         }
 
         if (changed === null) {
           console.error(
-            `WFC Propagation Contradiction: Cell "${neighborIdx}" (Neighbor of "${stackCellIdx}" on the "${
+            `WFC Propagation Contradiction: Cell "${neighborCellIdx}" (Neighbor of "${currentCellIdx}" on the "${
               TILE_EDGES_NAMES[edgeIdx ^ 1]
-            }" edge) has no options left after propagation from cell ${stackCellIdx}.`
+            }" edge) has no options left after propagation from cell ${currentCellIdx}.`
           );
-          this.entropyHeap.remove(stackCellIdx);
+          this.entropyHeap.remove(currentCellIdx);
           return false;
         }
       }
 
-      stackCellIdx = stack.pop();
+      currentCellIdx = stack.pop();
     }
 
     return true;

@@ -1,43 +1,58 @@
 <script lang="ts" setup>
-import Main from "./Main.vue";
-import Collapsed from "./Collapsed.vue";
 import { useEditor } from '../../../composables/editor/useEditor';
-import { EDITOR_MODE_TILES } from "../../../composables/constants";
-import { onMounted, ref, watch, useTemplateRef } from "vue";
+import { EDITOR_MODE_TILES, PANEL_POSITION_CENTER, PANEL_POSITION_RIGHT } from "../../../composables/constants";
+import { onMounted, ref, watch, useTemplateRef, nextTick } from "vue";
 import { useThrottleFn } from '@vueuse/core'
+import Wrapper from "./Wrapper.vue";
+import Collapsed from "./Collapsed.vue";
+import Loader from "./Loader.vue"
+import Error from './Error.vue';
 
-const { state } = useEditor();
+const { state, worldsCount, initialize } = useEditor();
+
+initialize();
 
 const target = useTemplateRef('target');
 const root = useTemplateRef('root');
 const translateX = ref<string>("0px");
 
-const alignToTarget = useThrottleFn(() => {
-  if (state.mode !== EDITOR_MODE_TILES)
+const positionPanel = useThrottleFn(async () => {
+  if (state.position === PANEL_POSITION_RIGHT)
     return translateX.value = "0px";
 
-  const targetRect = target.value!.getBoundingClientRect();
+  const isCentred = state.position === PANEL_POSITION_CENTER;
+
   const rootEl = root.value!;
+  const targetRect = (isCentred ? document.body : target.value!).getBoundingClientRect();
   const rootRight = rootEl.offsetLeft + rootEl.offsetWidth;
 
-  const rightDifference = targetRect.right - rootRight;
-  translateX.value = `${rightDifference.toFixed(4)}px - 1em`;
-}, 500);
+  const rightDifference = isCentred
+    ? (targetRect.right - targetRect.width / 2) - rootRight + rootEl.offsetWidth / 2
+    : targetRect.right - rootRight;
 
-onMounted(alignToTarget);
-watch(() => state.mode, alignToTarget);
-window.onresize = alignToTarget;
+  translateX.value = `${rightDifference.toFixed(4)}px - 1em`;
+}, 250, true);
+
+onMounted(positionPanel);
+watch(() => state.position, positionPanel);
+window.onresize = positionPanel;
 </script>
 
 <template>
   <div ref="target" :class="$style.target" />
   <div ref="root"
-    :class="[$style.panel, { [$style.collapse]: !state.expanded, [$style['tiles-mode']]: state.mode === EDITOR_MODE_TILES }]"
+    :class="[$style.panel, { [$style.center]: $style.center, [$style.collapse]: !state.expanded, [$style['tiles-mode']]: state.mode === EDITOR_MODE_TILES }]"
     :style="{ ['--translate-x']: translateX }">
-    <KeepAlive>
-      <Main v-if="state.expanded" />
+
+    <Error v-if="state.error" />
+
+    <Loader v-else-if="state.loading && !worldsCount" :scale="3" />
+
+    <KeepAlive v-else>
+      <Wrapper v-if="state.expanded" />
       <Collapsed v-else />
     </KeepAlive>
+
   </div>
 </template>
 
@@ -60,8 +75,7 @@ window.onresize = alignToTarget;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  min-height: 400px;
-  max-height: 100%;
+  max-height: 90%;
   width: 325px;
   padding: 0.5em 0;
   margin: auto 0;

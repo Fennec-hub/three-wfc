@@ -1,15 +1,21 @@
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { EDITOR_2D_EDGES } from '../../../../../composables/constants';
+import { useEditor } from '../../../../../composables/editor/useEditor';
 import EdgeColors from './EdgeColors.vue';
+
+const { tiles, state } = useEditor();
+
+const tile = computed(() => tiles[state.selectedTile!]);
 </script>
 
 <template>
   <div :class="$style['inner-grid']">
     <div :class="$style.tile">
-      <img :src="`https://picsum.photos/id/72/500/500`" />
-      <EdgeColors v-for="(edge, i) in EDITOR_2D_EDGES" :class="[$style[edge]]" :dir="edge" :col="!!(i % 2)" :key="i" />
+      <img :src="tile.image" :alt="tile.name" />
+      <EdgeColors v-for="(edge, i) in EDITOR_2D_EDGES" :class="[$style[edge]]" :id="tile.id" :edge="edge" :col="i > 1"
+        :key="i" />
     </div>
-
   </div>
 </template>
 
@@ -53,8 +59,7 @@ import EdgeColors from './EdgeColors.vue';
   max-width: 45%;
 
   img {
-    width: auto;
-    height: auto;
+    width: 500px;
   }
 }
 

@@ -1,13 +1,18 @@
 import { imgLoader } from "./imgLoader";
 
-export const generateTilesThumb = async (
+export const tilesToThumb = async (
   sources: string[],
-  width: number = 250,
-  height: number = 150,
-  max: number = 10
+  width: number = 300,
+  height: number = 128,
+  max: number = 10,
+  pixelRatio: boolean = true
 ) => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d")!;
+
+  const ratio = pixelRatio ? devicePixelRatio : 1;
+  width *= ratio;
+  height * ratio;
 
   canvas.width = width;
   canvas.height = height;
@@ -19,16 +24,15 @@ export const generateTilesThumb = async (
   const cellWidth = width / cols;
   const cellHeight = height / rows;
 
-  for (let i = 0; i < length; i++) {
-    const tile = sources[i];
-    const img = await imgLoader(sources[i]);
+  for (let i = 0; i < count; i++) {
+    const tile = await imgLoader(sources[i]);
     const col = i % cols;
     const row = Math.floor(i / cols);
 
     const x = col * cellWidth;
     const y = row * cellHeight;
 
-    drawFitImg(ctx, img, x, y, cellWidth, cellHeight);
+    drawFitImg(ctx, tile, x, y, cellWidth, cellHeight);
   }
 
   return new Promise((res: (value: Blob | null) => void) => canvas.toBlob(res));

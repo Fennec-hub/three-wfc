@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import InputField from "../form/InputField.vue"
 import SwitchField from "../form/SwitchField.vue";
+import Actions from "./Actions.vue";
 </script>
 
 <template>

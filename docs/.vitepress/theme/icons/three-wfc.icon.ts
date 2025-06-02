@@ -1,0 +1,18 @@
+export const threeWFCIcon = {
+  name: "three-wfc",
+  width: 226.8,
+  height: 226.8,
+  raw: `
+  <g class="three-wfc" fill-rule="evenodd" stroke="#000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="4" fill="#fff" stroke-linecap="square" stroke-miterlimit="10">
+    <path d="m72 204.9-43.2-175L202 79.8z"/>
+    <path d="m115.4 54.9 21.5 87.5-86.5-25z"/>
+    <path d="M93.9 129.3 83 85.8l43 12.4z"/>
+    <path d="M72.4 42.4 83.1 86l-43-12.4zM158.4 67.2l10.8 43.4-43-12.3zM93.9 129.3l10.7 43.5-43-12.4z"/>
+  </g>
+  <g stroke-linecap="square" stroke-miterlimit="10">
+    <path class="three-wfc" fill="#000" d="m114.1 8.4 51.3 6.5c1 .1 1.9.5 2.6 1.2 2 1.7 2.1 4.6.4 6.5L136.2 59 159 62c1 .2 2 .6 2.8 1.5a4.6 4.6 0 0 1-.3 6.5l-83.3 77.3a4.6 4.6 0 0 1-7.2-5.7l33-58.4-18.4-2.7c-.5 0-1-.2-1.5-.4a4.7 4.7 0 0 1-2.4-6.1l27.6-62.8c.9-1.9 2.8-3 4.9-2.8z" class="st0"/>
+    <path fill="#fcdb33" fill-rule="evenodd" d="M113.5 13.1 86 75.8l25.3 3.7-36.1 64.3 83.2-77.2-31.3-4.3L165 19.6z" class="st1" clip-rule="evenodd"/>
+    <path fill="#ff0" fill-rule="evenodd" d="M113.8 13.6 87 75.6l24.4 4L75 143.7l46.5-69.5-21.2-6.6L128 15.2z" class="st2" clip-rule="evenodd"/>
+  </g>
+  `,
+};

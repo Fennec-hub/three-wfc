@@ -1,61 +1,76 @@
 import { reactive, readonly } from "vue";
-import { WorldData, WorldState } from "../types";
+import {
+  Tiles2DState,
+  TileState,
+  WorldData,
+  WorldsState,
+  WorldState,
+} from "../types";
 import { useDB } from "./useDB";
-import { useTiles } from "./useTiles";
-import { generateTilesThumb } from "./utils/tilesToThumb";
+import { tilesToThumb } from "./utils/tilesToThumb";
 
 const db = useDB();
-const tiles = useTiles();
 
-const state = reactive<Record<number, WorldState>>({});
+const state = reactive<WorldsState>({});
+const readonlyState = readonly(state);
 
-const initialize = async () =>
-  db.getWorlds().then((data) => data.forEach(parse));
+const initialize = () =>
+  db
+    .getWorlds()
+    .then((data) => data.forEach(_parse))
+    .then(() => true)
+    .catch(() => false);
 
-const parse = (project: WorldData) => {
-  const thumb = project.thumb && URL.createObjectURL(project.thumb);
-  const entry = { [project.id]: { ...project, thumb } };
+const _parse = (world: WorldData) => {
+  const thumb = world.thumb && URL.createObjectURL(world.thumb);
+  const entry = { [world.id]: { ...world, thumb } };
 
   Object.assign(state, entry);
 };
 
-const create = (project: WorldData) => {
-  parse(project);
-  db.createWorld(project);
+const create = async (world: Omit<WorldData, "id">) => {
+  const id = await db.createWorld(world);
+
+  if (id != null) _parse({ ...world, id });
+
+  return id;
 };
-
-const list = () => Object.keys(state);
-
-const read = (id: number) => readonly(state[id]);
 
 const update = (id: number, changes: Partial<WorldData>) => {
   Object.assign(state[id], changes);
   db.updateWorld(id, changes);
 };
 
-const thumb = async (id: number) => {
-  const project = state[id];
-  const projectImages = project.tiles.map((tile) => tiles.read(tile).image);
-  const thumb = await generateTilesThumb(projectImages);
+const setTiles = async (id: number, tiles: Readonly<Tiles2DState>) => {
+  const worldImages = Object.values(tiles).map((tile) => tile.thumb);
+
+  update(id, { tiles: worldImages.length });
+
+  const thumb = await tilesToThumb(worldImages).catch(() => null);
 
   if (!thumb) return null;
 
-  project.thumb = URL.createObjectURL(thumb);
-  update(id, { thumb });
+  _dispose(id);
+
+  Object.assign(state[id], { thumb: URL.createObjectURL(thumb) });
+  db.updateWorld(id, { thumb });
 };
 
 const remove = (id: number) => {
-  if (state[id].thumb) URL.revokeObjectURL(state[id].thumb);
-  delete state[id];
+  _dispose(id);
   db.deleteWorld(id);
+  delete state[id];
+};
+
+const _dispose = (id: number) => {
+  if (state[id].thumb) URL.revokeObjectURL(state[id].thumb);
 };
 
 export const useWorlds = () => ({
+  state: readonlyState,
   initialize,
   create,
-  list,
-  read,
   update,
   remove,
-  thumb,
+  setTiles,
 });
